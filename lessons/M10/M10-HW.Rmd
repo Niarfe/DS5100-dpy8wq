@@ -166,7 +166,7 @@ should round both values in the boolean expression using `round()`.
 ```{r}
 # CODE HERE
 get_bracket<- function(sales) {
-  return(min(which(sales <= df$cut_sum)))
+  return( min( which( sales <= df$cut_sum ) ) )
 }
 
 get_bracket(0.8)
@@ -213,6 +213,14 @@ returns a value of $8550$.
 
 ```{r}
 # CODE HERE
+get_comm<- function(sales_frac) {
+   data = df[get_bracket(sales_frac),]
+   a<-data[["payout_sum"]]-data[["payout"]]
+   b<-(data[["cut"]]- (data[["cut_sum"]]-sales_frac) )/data[["cut"]]  * data[["payout"]]
+   return(a + b)
+}
+# test scenario sales_frac<-0.5, should return 8550.  
+get_comm(0.5)
 ```
 
 # Task 5
@@ -247,4 +255,7 @@ The result should look like this:
 
 ```{r}
 # CODE HERE
+df2<-data.frame(S=seq(from = 0.1, to = 1.0, by = 0.1))
+df2$C<-get_comm(df2$S)
+df2
 ```
