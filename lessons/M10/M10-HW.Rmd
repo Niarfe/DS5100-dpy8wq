@@ -1,6 +1,6 @@
 ---
 title: "R Notebook"
-output: html_notebook
+output: pdf_document
 editor_options: 
   markdown: 
     wrap: 72
@@ -104,6 +104,10 @@ Display `df` in a cell.
 
 ```{r}
 # CODE HERE
+quota<-225000
+
+df<-data.frame(cut=c(0.4, 0.3, 0.2, 0.1), payout_pct=c(0.07, 0.10, 0.13, 0.16) )
+df
 ```
 
 # Task 2
@@ -123,6 +127,13 @@ Display the augmented `df` in a cell.
 
 ```{r}
 # CODE HERE
+df$cut_sum<-cumsum(df$cut)
+df$amt<-df$cut * quota
+df$payout<-df$amt * df$payout_pct
+df$payout_sum<-cumsum(df$payout)
+df$amt_sum<-cumsum(df$amt)
+df
+
 ```
 
 # Task 3
@@ -154,6 +165,11 @@ should round both values in the boolean expression using `round()`.
 
 ```{r}
 # CODE HERE
+get_bracket<- function(sales) {
+  return(min(which(sales <= df$cut_sum)))
+}
+
+get_bracket(0.8)
 ```
 
 # Task 4
@@ -189,8 +205,8 @@ multiply that by the payout percentage. Another is to emulate the
 example — compute the percentage of $S$ that applies to the bracket and
 multiply this by $Q$ and the payout percentage.
 
-Note, finally, that you may not need all of the columns in `df` to compute
-$C$.
+Note, finally, that you may not need all of the columns in `df` to
+compute $C$.
 
 Test your function by passing it a value of $.5$ and make sure it
 returns a value of $8550$.
