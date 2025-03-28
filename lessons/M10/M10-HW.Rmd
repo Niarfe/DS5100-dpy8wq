@@ -166,10 +166,12 @@ should round both values in the boolean expression using `round()`.
 ```{r}
 # CODE HERE
 get_bracket<- function(sales) {
-  return( min( which( sales <= df$cut_sum ) ) )
+  indexes<-which( round(sales,1) <= round(df$cut_sum,1) )
+  return(min(indexes))
 }
 
 get_bracket(0.8)
+get_bracket(1.0)
 ```
 
 # Task 4
@@ -214,13 +216,18 @@ returns a value of $8550$.
 ```{r}
 # CODE HERE
 get_comm<- function(sales_frac) {
+
    data = df[get_bracket(sales_frac),]
+
    a<-data[["payout_sum"]]-data[["payout"]]
-   b<-(data[["cut"]]- (data[["cut_sum"]]-sales_frac) )/data[["cut"]]  * data[["payout"]]
-   return(a + b)
+   b<-(sales_frac - (data[["cut_sum"]] - data[["cut"]]) ) * data[["payout_pct"]] * quota
+
+   return(a+b)
 }
+
 # test scenario sales_frac<-0.5, should return 8550.  
 get_comm(0.5)
+get_comm(1.0)
 ```
 
 # Task 5
@@ -253,9 +260,22 @@ The result should look like this:
 10 1.0 22500
 ```
 
+# NOTE:  I have not been able to figure out one thing....
+When I run the below code you'll see that the data.frame fills out, but the values for commission are wrong starting after 0.4.
+I tried a bunch of things...
+
+* use a vector instead of a sequence...
+
+* use the `apply` function...
+
+* I created another function `dbl<- function(x) { return(2*x) }` and used that instead, that WORKS! every valud doubles...
+
+* So I figured it must be caching values, so I tried `rm(data)`in the get_comm function and a bunch of other shenanigans ...
+
+Sadly, I can't figure out why the get_comm function works great when I do it as a one off, but does not when I apply it to a data.frame
 ```{r}
 # CODE HERE
-df2<-data.frame(S=seq(from = 0.1, to = 1.0, by = 0.1))
+df2<-data.frame(S=seq(from=0.1, to=1.0, by=0.1))
 df2$C<-get_comm(df2$S)
 df2
 ```
