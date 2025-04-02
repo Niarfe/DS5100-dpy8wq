@@ -1,0 +1,126 @@
+---
+title: "class_participation"
+output: pdf_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+scores <- 
+  tibble(
+    name = c("mike", "carol", "greg", "marcia", "peter", "jan", "bobby", "cindy", "alice"),
+    school = c("south", "south", "south", "south", "north", "north", "north", "south", "south"),
+    teacher = c("johnson", "johnson", "johnson", "johnson",  "smith", "smith", "smith", "perry", "perry"),
+    sex = c("male", "female", "male", "female", "male", "female", "male", "female", "female"),
+    math_score = c(4, 3, 2, 4, 3, 4, 5, 4, 5),
+    reading_score = c(1, 5, 2, 4, 5, 4, 1, 5, 4)
+  )
+```
+
+```{r}
+scores %>%
+  slice(1:3)
+```
+
+```{r}
+scores_small <- scores %>%
+  slice(1:3)
+scores_small
+```
+
+# 11.5
+```{r}
+# sort data by math_score
+scores %>% 
+  arrange(desc(math_score)) # no quotes needed around math_score
+```
+
+```{r}
+# ex 11.6 sort name in aplha order
+scores %>% 
+  arrange(name)
+```
+
+```{r}
+# 11.7
+```
+
+```{r}
+# 11.8
+scores %>% 
+  arrange(school, teacher, sex, math_score, reading_score)
+```
+
+
+
+```{r}
+# ex 11.9
+scores %>% 
+  select(name, math_score, reading_score)
+```
+
+
+```{r}
+# ex 11.10
+scores %>% 
+  select(-sex)
+```
+
+```{r}
+scores %>% 
+  select(-math_score, -reading_score)
+```
+
+```{r}
+scores %>% 
+  select(sex, everything())
+```
+
+```{r}
+# part 3: Filter.  row wise operation
+scores %>% 
+  filter(sex == "male" & school == "south")
+```
+
+```{r}
+# 11.14
+scores %>% 
+  filter(math_score > mean(math_score))
+```
+
+```{r}
+# 11.15
+scores %>% 
+  filter(math_score >= 4 & reading_score >= 3)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
