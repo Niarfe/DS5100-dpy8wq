@@ -15,9 +15,9 @@ output: pdf_document
 
 # Student Info
 
-    Name:  
-    Net ID:
-    File GitHub URL:
+    Name:  Efrain Olivares
+    Net ID: dpy8wq
+    File GitHub URL: https://github.com/Niarfe/DS5100-dpy8wq/blob/main/lessons/M11/M11-HW-2.Rmd
 
 # Instructions
 
@@ -67,6 +67,8 @@ Get the dataset.
 
 ```{r}
 # CODE HERE
+Data <- read.csv('./data/abalone.data', header=FALSE)
+head(Data)
 ```
 
 ## Task 1
@@ -77,6 +79,7 @@ Print the number of rows in the dataset.
 
 ```{r}
 # CODE HERE
+nrow(Data)
 ```
 
 ## Task 2
@@ -88,6 +91,7 @@ rings
 
 ```{r}
 # CODE HERE
+max(Data$V9)
 ```
 
 ## Task 3
@@ -102,6 +106,12 @@ gender is infant, and print the number of records.
 
 ```{r}
 # CODE HERE
+library(tidyverse)
+
+infants <- Data %>%
+  filter(V1 == 'I')
+
+nrow(infants)
 ```
 
 ## Task 4
@@ -113,6 +123,10 @@ gender is infant or male, and print the number of records.
 
 ```{r}
 # CODE HERE
+infant_or_male <- Data %>%
+  filter(V1 == 'I' | V1 == 'M')
+
+nrow(infant_or_male)
 ```
 
 ## Task 5
@@ -126,6 +140,8 @@ Print the result.
 
 ```{r}
 # CODE HERE
+Data$V1 %>%
+  table()
 ```
 
 ## Task 6
@@ -141,6 +157,10 @@ Requirements: use the `%>%` operator to chain commands, and the
 
 ```{r}
 # CODE HERE
+groups <- Data %>%
+  group_by(V1) %>% # SPLIT
+  summarize(mean_shell = mean(V2)) # APPLY
+groups  # COMBINE
 ```
 
 # Task 7
@@ -154,4 +174,8 @@ Requirements: use the `%>%` operator to chain commands.
 
 ```{r}
 # CODE HERE
+male_median_shell <- Data %>%
+  filter(V1 == 'M') %>% # SPLIT
+  summarize(median_shell = median(V2)) # APPLY
+male_median_shell  # COMBINE
 ```
