@@ -1,0 +1,51 @@
+---
+title: "class_participation"
+output: html_document
+---
+
+```{r}
+library(vctrs)
+library(tidyverse)
+```
+
+
+```{r}
+mpg %>%
+  ggplot()+
+  aes(x = cyl, y = hwy) +
+  geom_point()
+```
+
+```{r}
+mpg %>%
+  ggplot()+
+  aes(x = class, y = drv) +
+  geom_point()
+```
+```{r}
+x <- seq(-6 * i, 6 * 3.1415936, length.out=100)
+
+dat<- data.frame(x=x, y=sin(x)/x)
+```
+```{r}
+cars %>%
+  ggplot()+
+  aes(x = speed, y = dist) +
+  geom_point()
+```
+
+```{r}
+cars %>%
+  ggplot()+
+  aes(x = speed, y = dist) +
+  geom_point(mapping = aes(color = dist > 80))
+```
+```{r}
+#scale_color_manual <- function(thold) { dist>thold}
+cars %>%
+  ggplot()+
+  aes(x = speed, y = dist) +
+  geom_point(mapping = aes(color = dist > 80))+
+  scale_color_manual(values=c("blue", "red"))
+```
+
