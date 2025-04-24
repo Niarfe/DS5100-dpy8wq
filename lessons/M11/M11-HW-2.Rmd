@@ -179,3 +179,11 @@ male_median_shell <- Data %>%
   summarize(median_shell = median(V2)) # APPLY
 male_median_shell  # COMBINE
 ```
+
+```{r}
+
+```
+
+```{r}
+nrow(filter(Data, V2 == 0.455))
+```
