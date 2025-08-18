@@ -1,0 +1,59 @@
+---
+title: "APIs"
+author: "Efrain Olivares"
+date: "2025-05-06"
+output: pdf 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r echo=FALSE}
+library(httr)
+library(jsonlite)
+library(xml2)
+library(XML)
+```
+
+```{r}
+res = GET("https://www.france24.com/fr/rss")
+res
+```
+
+
+```{r}
+rss_data<-read_xml(res$content)
+rss_data
+```
+
+```{r}
+xml_data<-xmlParse(rss_data)
+xml_data
+```
+
+```{r}
+xml_structure(rss_data)
+```
+
+```{r}
+xml_find_all(rss_data,".//title")
+```
+
+```{r}
+xml_text(xml_find_all(rss_data,".//title"))
+```
+
+```{r}
+library(tibble)
+```
+
+```{r}
+
+title<-xml_text(xml_find_all(rss_data, ".//title"))
+desc<- xml_text(xml_find_all(rss_data, ".//description"))
+
+df_title_desc<-tibble(title=title, description=desc)
+df_title_desc
+```
+
+
